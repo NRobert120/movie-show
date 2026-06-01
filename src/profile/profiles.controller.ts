@@ -1,11 +1,17 @@
-import { Put } from '@nestjs/common';
-import { Controller,Get,Query,Param,Post, Body,Patch,Delete,HttpCode,HttpStatus } from '@nestjs/common';
-import { ParamsTokenFactory } from '@nestjs/core/pipes';
+
+import { Controller,Get,Query,Param,Post,Put, Body,Delete,HttpCode,HttpStatus } from '@nestjs/common';
 import { CreateProfileDto } from 'src/profile/dto/create-profile.dto';
 import UpdateprofileDto from 'src/profile/dto/updata-profile.dto';
+import { ProfileService } from './profile.service';
 
 @Controller('profiles')
 export class ProfilesController{
+  constructor(private ProfileService:ProfileService){}
+    @Get('all')
+      getAll():{}{
+        return this.ProfileService.findAll()
+      }
+  
     @Get()
      getProfiles(@Query('location') location: string):{}[]{
         return [{message:'you location is '+location}]
@@ -20,7 +26,7 @@ export class ProfilesController{
 
         }
      }
-    @Patch(':id')
+    @Put(':id')
       update(@Param('id') id:string,@Body() Body:UpdateprofileDto):{}{
         return {
             id:id,
@@ -29,11 +35,10 @@ export class ProfilesController{
         }
       }
     @Delete(':id')
-      @HttpCode(HttpStatus.NO_CONTENT)
-        delete(
-            @Param('id') id:string,
-        ):string{
-       return 'profile with id '+id+'is deleted';        }
+     @HttpCode(HttpStatus.OK)
+      delete(@Param('id') id:string):string{
+        return `profile with id ${id} is deleted`;
+      }
 
     
 
