@@ -1,6 +1,11 @@
+import {IsString,Length} from "class-validator"
+
 class UpdateprofileDto{
-    name:string;
-    description:string
+    @IsString()
+    @Length(3,100)
+     name:string;
+    @IsString()
+     description:string;
 }
 
 export default UpdateprofileDto;
