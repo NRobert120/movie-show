@@ -1,13 +1,20 @@
-import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { ProfileModule } from './profile/profile.module';
-import { ProfilesController } from './profile/profiles.controller';
-import { ProfileService } from './profile/profile.service';
+import { Module } from "@nestjs/common";
+import { authModule } from "./auth/auth.module";
+import { BookmarkModule } from './bookmark/bookmark.module';
+import { UserModule } from './user/user.module';
+import { authService } from "./auth/auth.service";
+import { authController } from "./auth/auth.controller";
+import { bookmarkService } from "./bookmark/bookmark.service";
+import { bookmarkController } from "./bookmark/bookmark.controller";
+import { userService } from "./user/user.service";
+import { userController } from "./user/user.controller";
+// import { prismaModule } from "./prisma/prisma.module";
+import { PrismaService } from "./prisma/prisma.service";
+import { prismaModule } from "./prisma/prisma.module";
 
 @Module({
-  imports: [ProfileModule],
-  controllers: [AppController, ProfilesController],
-  providers: [AppService,ProfileService],
+  imports:[authModule, BookmarkModule, UserModule,BookmarkModule],
+  providers:[authService,bookmarkService,userService,PrismaService],
+  controllers:[authController,bookmarkController,userController]
 })
 export class AppModule {}
