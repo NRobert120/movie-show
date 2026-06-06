@@ -1,7 +1,8 @@
-import { HttpCode, HttpException, HttpStatus, Injectable } from "@nestjs/common";
+import { HttpCode, HttpException, HttpStatus, Injectable, InternalServerErrorException, UnauthorizedException } from "@nestjs/common";
 import { PrismaService } from "src/prisma/prisma.service";
 import * as bcrypt from "bcrypt"
 import { CreateUserDto, SignInUpDto } from "./creat-user.dto";
+import { ExceptionsHandler } from "@nestjs/core/exceptions/exceptions-handler";
 @Injectable()
 export class AuthService{
     constructor(private prisma:PrismaService){}
@@ -11,24 +12,29 @@ export class AuthService{
         data
      })
   }
-  async signIn(body:SignInUpDto){
-   try{
-     const user=await this.prisma.user.findFirst({
-       where:{email:body.email}
-     })
-     const macth=await bcrypt.compare(user?.hash,body.hash)
-     return user
-   }catch(error){
-     return 'not found'
 
+
+
+  async signIn(body:SignInUpDto){
+    
+     const user=await this.prisma.user.findUnique({
+      where:{email:body.email}
+     })
+     if(!user){
+      throw new UnauthorizedException('invalid creditials')
+     }
+     const validatePassword= await bcrypt.compare(body.hash,user.hash)
+     if(!validatePassword){
+       throw new UnauthorizedException('invalid creditionals');
+     }
+     return user
+   
   }
+
+
   
 }
 
 
 
 
-
-
-
-}

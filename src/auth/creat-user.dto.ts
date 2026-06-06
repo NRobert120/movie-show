@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { IsString,IsEmpty,IsEmail } from "class-validator";
-import { StringFilter } from "generated/prisma/commonInputTypes";
+
 
 export class CreateUserDto{
     @IsEmail()
@@ -22,3 +22,4 @@ export class SignInUpDto{
 
        
 }
+
