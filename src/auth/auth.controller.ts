@@ -1,18 +1,19 @@
-import { Controller,Post } from "@nestjs/common";
-import { authService } from "./auth.service";
-import { sign } from "crypto";
+import { Body, Controller,Get,Post,Param } from "@nestjs/common";
+import { AuthService } from "./auth.service";
+import { CreateUserDto, SignInUpDto } from "./creat-user.dto";
 import { retry } from "rxjs";
 
 @Controller('auth')
-export class authController{
-  constructor(private authService:authService){}
+export class AuthController{
+  constructor(private AuthService:AuthService){}
   @Post('signup')
-   signup(){
-    return 'this is the rout of signing up'
+   signUp(@Body() body:CreateUserDto){
+    return this.AuthService.signUp(body)
    }
-   @Post('signin')
-    signin(){
-        return 'this is the route of signing in'
-    }
+@Post('signin')
+ signin(@Body() body:SignInUpDto){
+    return this.AuthService.signIn(body)
+
+ }
    
 }
