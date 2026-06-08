@@ -1,7 +1,7 @@
 import { Body, Controller,Get,Post,Param } from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import { CreateUserDto, SignInUpDto } from "./creat-user.dto";
-import { retry } from "rxjs";
+
 
 @Controller('auth')
 export class AuthController{
@@ -13,7 +13,5 @@ export class AuthController{
 @Post('signin')
  signin(@Body() body:SignInUpDto){
     return this.AuthService.signIn(body)
-
  }
-   
 }

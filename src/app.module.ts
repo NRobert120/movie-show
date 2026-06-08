@@ -12,9 +12,11 @@ import { userController } from "./user/user.controller";
 import { PrismaService } from "./prisma/prisma.service";
 import { prismaModule } from "./prisma/prisma.module";
 import { Prisma } from "generated/prisma/browser";
+import { ConfigModule } from "@nestjs/config";
 
 @Module({
-  imports:[authModule, BookmarkModule, UserModule,BookmarkModule,prismaModule],
+  imports:[
+    ConfigModule.forRoot({isGlobal:true}),authModule, BookmarkModule, UserModule,BookmarkModule,prismaModule],
   providers:[AuthService,bookmarkService,userService,PrismaService],
   controllers:[AuthController,bookmarkController,userController]
 })
