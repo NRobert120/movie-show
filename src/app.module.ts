@@ -8,10 +8,8 @@ import { bookmarkService } from "./bookmark/bookmark.service";
 import { bookmarkController } from "./bookmark/bookmark.controller";
 import { userService } from "./user/user.service";
 import { userController } from "./user/user.controller";
-// import { prismaModule } from "./prisma/prisma.module";
 import { PrismaService } from "./prisma/prisma.service";
 import { prismaModule } from "./prisma/prisma.module";
-import { Prisma } from "generated/prisma/browser";
 import { ConfigModule } from "@nestjs/config";
 
 @Module({
