@@ -16,7 +16,7 @@ import {
 
 @Injectable()
 export class AuthService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) {}
   async signUp(data: CreateUserDto) {
     const isCreated =
       await this.prisma.user.findUnique({
