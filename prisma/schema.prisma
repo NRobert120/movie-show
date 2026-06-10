@@ -28,7 +28,7 @@ model BookMark {
   createAt DateTime @default(now())
   updateAt DateTime @updatedAt
 
-  title       String
+  title       String @unique
   description String?
   link        String
 }
