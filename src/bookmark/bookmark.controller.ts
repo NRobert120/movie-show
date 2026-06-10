@@ -9,7 +9,7 @@ import {
 import { bookmarkService } from './bookmark.service';
 import { CreateBookMark, UpdateBookMark } from './create-bookmark.dto';
 
-@Controller('bookmark')
+@Controller('bookmarks')
 export class bookmarkController {
   constructor(
     private bookmarkService: bookmarkService,
@@ -18,6 +18,15 @@ export class bookmarkController {
   getHealth() {
     return this.bookmarkService.test();
   }
+  @Get()
+   getAll(){
+    return this.bookmarkService.getAll();
+   }
+  @Get(':id')
+  
+   getOneById(@Param('id') id:number){
+    return this.bookmarkService.getOneBYId(id)
+   }
 
   @Post('addbookmark')
   addbookmark(@Body () body:CreateBookMark){
