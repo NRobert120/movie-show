@@ -11,6 +11,7 @@ import { userController } from './user/user.controller';
 import { PrismaService } from './prisma/prisma.service';
 import { prismaModule } from './prisma/prisma.module';
 import { ConfigModule } from '@nestjs/config';
+import { MovieModule } from './movie/movie.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { ConfigModule } from '@nestjs/config';
     UserModule,
     BookmarkModule,
     prismaModule,
+    MovieModule,
   ],
   providers: [
     AuthService,
