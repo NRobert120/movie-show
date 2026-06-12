@@ -12,6 +12,13 @@ datasource db {
   
 }
 
+enum Genre {
+   SCIFI
+   ANIMATION
+   HORROR
+   ACTION
+ }
+
 
 model User {
   id        Int  @unique  @id @default(autoincrement())
@@ -31,4 +38,14 @@ model BookMark {
   title       String @unique
   description String?
   link        String
+}
+
+model Movie{
+  id Int @id @default(autoincrement())
+  title String 
+  picUrl String
+  description String
+  genre Genre
+  views Int
+
 }
