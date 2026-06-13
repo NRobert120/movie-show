@@ -13,14 +13,12 @@ export class MovieController {
      getOneMovie(){
         return "see one move by id"
      }
-    @Post()
-        addMovie(){
-            return "add movie"
-        }
     @Put()
      updateMovie(){
         return  "update movies"
      }
 
 }
+
+
 

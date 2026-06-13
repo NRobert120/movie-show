@@ -13,10 +13,11 @@ import {
   CreateUserDto,
   SignInUpDto,
 } from './creat-user.dto';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService,private jwtService:JwtService) {}
   async signUp(data: CreateUserDto) {
     const isCreated =
       await this.prisma.user.findUnique({
@@ -32,7 +33,7 @@ export class AuthService {
       data,
     });
   }
-  async signIn(body: SignInUpDto) {
+  async signIn(body: SignInUpDto){
     const user =
       await this.prisma.user.findUnique({
         where: { email: body.email },
@@ -51,6 +52,9 @@ export class AuthService {
         'invalid creditionals',
       );
     }
-    return user;
+    const jwtPayload={sub:user.id,email:user.email}
+
+   const accessToken= await this.jwtService.signAsync(jwtPayload)
+    return accessToken;
   }
 }

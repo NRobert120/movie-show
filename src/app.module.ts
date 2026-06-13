@@ -12,11 +12,20 @@ import { PrismaService } from './prisma/prisma.service';
 import { prismaModule } from './prisma/prisma.module';
 import { ConfigModule } from '@nestjs/config';
 import { MovieModule } from './movie/movie.module';
+import { JwtModule } from '@nestjs/jwt';
+import { ConfigService } from '@nestjs/config';
+const config= new ConfigService();
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
     authModule,
+    JwtModule.register({
+      secret:config.get<string>('JWT_SECRET'),
+      signOptions:{
+        expiresIn:'15m'
+      }
+    }),
     BookmarkModule,
     UserModule,
     BookmarkModule,
