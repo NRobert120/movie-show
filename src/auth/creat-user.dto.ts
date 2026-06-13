@@ -23,3 +23,8 @@ export class SignInUpDto {
   @IsString()
   hash: string;
 }
+
+export class refreshTokenDto{
+   @IsString()
+   token:string
+}

@@ -5,6 +5,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 export class MovieService {
 
 constructor( private prisma:PrismaService){}
+  
  
 
 }

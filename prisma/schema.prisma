@@ -40,12 +40,3 @@ model BookMark {
   link        String
 }
 
-model Movie{
-  id Int @id @default(autoincrement())
-  title String 
-  picUrl String
-  description String
-  genre Genre
-  views Int
-
-}

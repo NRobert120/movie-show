@@ -8,6 +8,7 @@ import {
 import { AuthService } from './auth.service';
 import {
   CreateUserDto,
+  refreshTokenDto,
   SignInUpDto,
 } from './creat-user.dto';
 
@@ -22,4 +23,8 @@ export class AuthController {
   signin(@Body() body: SignInUpDto) {
     return this.AuthService.signIn(body);
   }
+  @Post('refresh')
+   refreshToken(dto:refreshTokenDto){
+    return this.refreshToken(dto)
+   }
 }
