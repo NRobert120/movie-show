@@ -1,7 +1,9 @@
-import { Controller,Get, Post,Put } from '@nestjs/common';
+import { Controller,Get, Post,Put, UseGuards } from '@nestjs/common';
+import { jwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 
 @Controller('movie')
+@UseGuards(jwtAuthGuard)
 export class MovieController {
     @Get()
      getAllMovie(){
