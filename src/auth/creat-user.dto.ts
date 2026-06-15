@@ -7,24 +7,24 @@ import {
 
 export class CreateUserDto {
   @IsEmail()
-  email: string;
+  email!: string;
   @IsString()
-  hash: string;
+  hash!: string;
   @IsString()
-  firstName: string;
+  firstName!: string;
   @IsString()
-  lastName: string;
+  lastName!: string;
 }
 
 export class SignInUpDto {
   @IsString()
   @IsEmail()
-  email: string;
+  email!: string;
   @IsString()
-  hash: string;
+  hash!: string;
 }
 
 export class refreshTokenDto{
    @IsString()
-   token:string
+   sub!:number
 }

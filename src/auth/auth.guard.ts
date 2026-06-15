@@ -9,7 +9,7 @@ export class JwtStrategy extends PassportStrategy(Strategy,'jwt') {
 
   constructor(private config: ConfigService, private prisma:PrismaService) {
       const secret = config.get<string>('JWT_SECRET');
-
+ 
     if (!secret) {
       throw new Error('JWT_SECRET is missing in environment variables');
     }
@@ -34,3 +34,27 @@ export class JwtStrategy extends PassportStrategy(Strategy,'jwt') {
     };
   }
 }
+
+
+
+@Injectable()
+ export class refleshTokenStrategy extends PassportStrategy(Strategy,'jwt-refresh'){
+    
+     constructor(private config:ConfigService){
+       super({
+      jwtFromRequest:ExtractJwt.fromAuthHeaderAsBearerToken(),
+        ignoreExpiration:false,
+        secretOrKey:config.get<string>('JWT_REFRESH')!
+       })
+     }
+
+     async validate(payload:any) {
+         return {
+           sub:payload.sub
+         }
+         
+     }
+     
+ }
+
+

@@ -4,6 +4,7 @@ import {
   Get,
   Post,
   Param,
+  UseGuards,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import {
@@ -11,6 +12,8 @@ import {
   refreshTokenDto,
   SignInUpDto,
 } from './creat-user.dto';
+
+import { jwtAuthGuard, refreshTokenAuthGuard } from './jwt.guards';
 
 @Controller('auth')
 export class AuthController {
@@ -23,8 +26,9 @@ export class AuthController {
   signin(@Body() body: SignInUpDto) {
     return this.AuthService.signIn(body);
   }
+  @UseGuards(refreshTokenAuthGuard)
   @Post('refresh')
    refreshToken(dto:refreshTokenDto){
-    return this.refreshToken(dto)
+    return this.AuthService.refreshToken(dto)
    }
 }

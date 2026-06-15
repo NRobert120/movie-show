@@ -5,6 +5,7 @@ import {
   HttpStatus,
   Injectable,
   InternalServerErrorException,
+  PayloadTooLargeException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
@@ -16,6 +17,10 @@ import {
 } from './creat-user.dto';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
+import { dot } from 'node:test/reporters';
+import { StringFieldRefInput, StringFilter } from 'generated/prisma/internal/prismaNamespace';
+import { use } from 'passport';
+import { IsEmail } from 'class-validator';
 
 @Injectable()
 export class AuthService {
@@ -71,15 +76,39 @@ export class AuthService {
         'invalid creditionals',
       );
     }
-    const jwtPayload={sub:user.id,email:user.email}
+    const Payload={sub:user.id,email:user.email}
 
-   const accessToken= await this.jwtService.signAsync(jwtPayload)
-    return accessToken;
+   const accessToken= await this.jwtService.signAsync(Payload)
+
+   const refreshToken= await this.jwtService.signAsync({id:Payload.sub},{
+    secret:this.config.get<string>('JWT_REFRESH'),
+    expiresIn:'7d'
+   })
+    return {accessToken,refreshToken};
   }
 
   async refreshToken(dto:refreshTokenDto){
-    
+    const user= await this.prisma.user.findUnique({
+      where:{id:dto.sub}
+    })
+    if(!user){
+      throw new UnauthorizedException()
+    }
+    const payload= {
+      sub:user.id,
+      email:user.email
+    }
+     const accessToken= await this.jwtService.signAsync({payload},{
+    secret:this.config.get<string>('JWT_SECRETE'),
+    expiresIn:'15m'
+   })
+ 
+   const refreshToken= await this.jwtService.signAsync({sub:dto.id},{
+    secret:this.config.get<string>('JWT_REFRESH'),
+    expiresIn:'7d'
+   })
 
+    return {refreshToken,accessToken}
   }
 
 }
