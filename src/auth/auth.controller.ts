@@ -13,7 +13,7 @@ import {
   SignInUpDto,
 } from './creat-user.dto';
 
-import { jwtAuthGuard, refreshTokenAuthGuard } from './jwt.guards';
+import { refreshTokenAuthGuard } from './jwt.guards';
 
 @Controller('auth')
 export class AuthController {
@@ -29,6 +29,6 @@ export class AuthController {
   @UseGuards(refreshTokenAuthGuard)
   @Post('refresh')
    refreshToken(dto:refreshTokenDto){
-    return this.AuthService.refreshToken(dto)
+    return this.AuthService.refreshToken(dto);
    }
 }
