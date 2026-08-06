@@ -1,5 +1,5 @@
 import { Controller,Get, Post,Put, UseGuards } from '@nestjs/common';
-import { jwtAuthGuard } from 'src/auth/jwt.guards';
+import { jwtAuthGuard } from 'src/auth/guards/jwt.guard';
 
 
 @Controller('movie')

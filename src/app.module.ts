@@ -14,6 +14,7 @@ import { ConfigModule } from '@nestjs/config';
 import { MovieModule } from './movie/movie.module';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
+import { appController } from './app.controller';
 const config= new ConfigService();
 
 @Module({
@@ -39,6 +40,7 @@ const config= new ConfigService();
     PrismaService,
   ],
   controllers: [
+    appController,
     AuthController,
     bookmarkController,
     userController,
